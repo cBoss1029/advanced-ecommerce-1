@@ -42,7 +42,7 @@ Fork, clone, run npm install, npm start, pull request
 * The products in the cart need to be sent to the server to be saved as an order
 * When the products are recieved by the server, they need to be saved in a database 
 
-
+ 
 
 #### Server
 * Create a database for this project

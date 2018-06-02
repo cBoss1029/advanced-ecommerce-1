@@ -27,10 +27,20 @@ function Header(props) {
                         <a href="#">Contact</a>
                     </li>
                     <li >
-                        <a href="#">Items In Cart (0)</a>
+                        <a href="#">Items In Cart ({props.items})</a>
                     </li>
                 </ul>
+                <ul className="nav navbar-right top-nav">
+                        <li className="dropdown">
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown"><i className="glyphicon glyphicon-shopping-cart" style={{fontSize: 20,color: '#fafafa'}}></i> ({this.props.itemsInCart})<b className="caret"></b></a>
+                            <ul className="dropdown-menu list-group" style={{width: 300}}>
+                                {/* {getCart}
+                                {checkOutBttn} */}
+                            </ul>
+                        </li>
+                    </ul>
             </div>
+            
          
         </div>
       

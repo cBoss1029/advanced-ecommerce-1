@@ -4,7 +4,10 @@ import App from './App';
 import './index.css';
 import state from './state';
 
+const {products} = state;
+
+
 ReactDOM.render(
-  <App />,
+  <App products = {products} />,
   document.getElementById('root')
 );

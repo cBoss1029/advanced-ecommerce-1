@@ -1,30 +1,36 @@
-import React from 'react'
+import React, {Component} from 'react'
+import ProductRating from './ProductRating';
 
-function ProductDetail(props) {
-    return (
-        <div className="col-sm-4 col-lg-4 col-md-4">
-        <div className="thumbnail">
-            <img src="http://placehold.it/320x150" alt=""/>
-            <div className="caption">
-                <h4 className="pull-right">$24.99</h4>
-                <h4><a href="#">First Product</a>
-                </h4>
-                <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-            </div>
-            <div className="ratings">
-                <p className="pull-right">15 reviews</p>
-                <p>
-                    <span className="glyphicon glyphicon-star"></span>
-                    <span className="glyphicon glyphicon-star"></span>
-                    <span className="glyphicon glyphicon-star"></span>
-                    <span className="glyphicon glyphicon-star"></span>
-                    <span className="glyphicon glyphicon-star"></span>
-                </p>
+class ProductDetail extends Component {
+    render() {
+        const product = this.props.product;
+
+        return (
+            <div className="col-sm-4 col-lg-4 col-md-4">
+            <div className="thumbnail">
+                <img src={this.props.product.imgUrl} alt=""/>
+                <div className="caption">
+                    <h4 className="pull-right">{this.props.product.price}</h4>
+                    <h4><a href="#">{this.props.name}</a>
+                    </h4>
+                    <p>{this.props.product.description}</p>
+                </div>
+                <div className="ratings">
+                    <p className="pull-right">{this.props.product.reviews} Reviews</p>
+                        <ProductRating rating={this.props.product.rating}/>
+                </div>
+                <div className='addToCart'>
+                    <button onClick={()=>this.props.handleAdd(product)} style={{marginBottom: '10px'}}>Add to Cart</button>
+                </div>
             </div>
         </div>
-    </div>
+    
+        )
 
-    )
+
+    }
+
 }
+
 
 export default ProductDetail;
