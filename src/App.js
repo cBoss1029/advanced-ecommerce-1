@@ -5,6 +5,7 @@ import ProductDetail from './components/ProductDetail';
 import Carousel from './components/Carousel';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import Checkout from "./components/Checkout";
 
 class App extends Component {
     constructor(props) {
@@ -12,24 +13,62 @@ class App extends Component {
         this.state={
             numberOrItemsInCart:0,
             cart:[],
+            products: [],
+            isLoaded: false,
 
         }
 
     }
+    componentDidMount() {
+        fetch('/products', {
+            headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+             },
+             method: 'GET',
+      
+          })
+        .then(res=> res.json())
+        .then((data)=> {
+            data.forEach(product => {
+            const newProducts = [...this.state.products, product]
+            this.setState({products: newProducts, isLoaded: true})
+        })
+    }, (error) => {
+        this.setState({
+            isLoaded: true, error
+        })
+    })
+    
+
+    }
+    
     handleAddToCart=(product)=> {
         let newCart = [...this.state.cart];
         newCart.push({item: product.name, price: product.price, description: product.description})
         this.setState({numberOrItemsInCart: this.state.numberOrItemsInCart += 1, cart: newCart})
-        console.log(this.state.cart)
+    }
+
+    renderProducts(){
+        if (this.state.products) {
+            return this.state.products.map((p,i)=>{
+                return <ProductDetail handleAdd = {this.handleAddToCart} product={p} key={i} />
+            })
+        }
     }
 
     render() {
-        let productRows = [];
-        productRows= this.props.products.map((p,i)=> <ProductDetail handleAdd = {this.handleAddToCart} product={p} key={i} />)
+        if(!this.state.isLoaded){
+            return <h5>Loading . . .</h5>
+        }
         return (
           <div className="App">
          {/*<Header>*/}
-         <Header items = {this.state.numberOrItemsInCart}/>
+         <Header 
+         itemsInCart = {this.state.numberOrItemsInCart}
+         toggleCart={()=>!this.state.cartVisible ? this.setState({cartVisible:true}) : this.setState({cartVisible:false})}
+         cartItems={this.state.cart}
+         isVisible={this.state.cartVisible}/>
          {/*</Header>*/}
      
         <div className="container">
@@ -51,7 +90,7 @@ class App extends Component {
                     {/*</Carousel>*/}
                     <div className="row">
                         {/*<ProductDetail>*/}
-                        {productRows}
+                        {this.renderProducts()}
                         {/*</ProductDetail>*/}
     {/*
                         <div className="col-sm-4 col-lg-4 col-md-4">

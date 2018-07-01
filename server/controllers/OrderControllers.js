@@ -1,9 +1,7 @@
-let ProductModel = require('../models/Product')
+let OrderModel = require('../models/Order')
 
 module.exports.list =  function list(request, response) {
-    console.log('test')
-    ProductModel.find({}).exec()
-    .then(products => {response.json(products)})
+return response.json([]);
 }
 module.exports.show =  function show(request, response) {
 return response.json({theId: request.params.id});
